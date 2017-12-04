@@ -12,7 +12,7 @@
  */
 
 /**
- * Copyright (c) 2015 10up (email : info@10up.com)
+ * Copyright (c) 2015 Mario Aguiar (email : me@marioaguiar.net)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
@@ -46,8 +46,8 @@ require_once MAH_DOWNLOADS_INC . 'functions/core.php';
 
 
 // Activation/Deactivation
-register_activation_hook( __FILE__, '\TenUp\Mah_Downloads\Core\activate' );
-register_deactivation_hook( __FILE__, '\TenUp\Mah_Downloads\Core\deactivate' );
+register_activation_hook( __FILE__, '\Mah_Downloads\Core\activate' );
+register_deactivation_hook( __FILE__, '\Mah_Downloads\Core\deactivate' );
 
 // Bootstrap
-TenUp\Mah_Downloads\Core\setup();
+Mah_Downloads\Core\setup();

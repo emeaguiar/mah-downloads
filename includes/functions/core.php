@@ -1,5 +1,5 @@
 <?php
-namespace TenUp\Mah_Downloads\Core;
+namespace Mah_Downloads\Core;
 
 /**
  * Default setup routine
