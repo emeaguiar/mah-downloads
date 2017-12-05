@@ -15,7 +15,7 @@ module.exports = {
 			sourceMap: true
 		},
 		files: {
-			'assets/css/mah-donwloads-admin.css': 'assets/css/sass/mah-downloads-admin.scss'
+			'assets/css/mah-downloads-admin.css': 'assets/css/sass/mah-downloads-admin.scss'
 		}
 	}
 };

@@ -1,6 +1,6 @@
 {
 	"version": 3,
-	"file": "mah-donwloads-admin.css",
+	"file": "mah-downloads-admin.css",
 	"sources": [
 		"sass/mah-downloads-admin.scss",
 		"sass/admin/_upload-box.scss"
