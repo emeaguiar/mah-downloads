@@ -14,7 +14,7 @@ module.exports = {
 	},
 	scripts: {
 		files: ['assets/js/src/**/*.js', 'assets/js/vendor/**/*.js'],
-			tasks: ['jshint', 'concat', 'uglify'],
+			tasks: ['jshint', 'browserify', 'uglify'],
 			options: {
 			debounceDelay: 500
 		}
