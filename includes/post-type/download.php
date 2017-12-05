@@ -24,8 +24,9 @@ function setup() {
 	// Register post type.
 	add_action( 'init',                  $n( 'register' ) );
 	add_action( 'edit_form_after_title', $n( 'add_attachment_metabox' ) );
-	add_action( 'admin_enqueue_scripts',  $n( 'enqueue_scripts' ) );
-	add_action( 'admin_enqueue_scripts',  $n( 'enqueue_styles' ) );
+	add_action( 'admin_enqueue_scripts', $n( 'enqueue_scripts' ) );
+	add_action( 'admin_enqueue_scripts', $n( 'enqueue_styles' ) );
+	add_action( 'admin_footer',          $n( 'print_dropper_template' ) );
 }
 
 /**
@@ -111,8 +112,30 @@ function add_attachment_metabox( $post ) {
  */
 function enqueue_scripts() {
 	wp_enqueue_script( 'mah-downloads-admin', MAH_DOWNLOADS_URL . '/assets/js/mah-downloads-admin.js', array( 'jquery' ), MAH_DOWNLOADS_VERSION, true );
+
+	$mah_i18n_strings = array(
+		'dropLabel' => esc_html__( 'Drop one file to be uploaded', 'mah_download' ),
+	);
+	wp_localize_script( 'mah-downloads-admin', 'mahI18n', $mah_i18n_strings );
 }
 
 function enqueue_styles() {
 	wp_enqueue_style( 'mah-downloads-admin', MAH_DOWNLOADS_URL . '/assets/css/mah-downloads-admin.css', array(), MAH_DOWNLOADS_VERSION );
+}
+
+function print_dropper_template() {
+	$post = get_post();
+
+	if ( ! $post || 'mah-download' !== $post->post_type ) {
+		return;
+	}
+?>
+	<script type="text/template" id="tmpl-dropper">
+		<div class="inline-uploader-editor">
+			<div class="uploader-editor-content">
+				{{dropLabel}}
+			</div>
+		</div>
+	</script>
+<?php
 }
