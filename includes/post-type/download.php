@@ -22,7 +22,8 @@ function setup() {
 	};
 
 	// Register post type.
-	add_action( 'init', $n( 'register' ) );
+	add_action( 'init',                  $n( 'register' ) );
+	add_action( 'edit_form_after_title', $n( 'add_attachment_metabox' ) );
 }
 
 /**
@@ -60,4 +61,39 @@ function register() {
 	);
 
 	register_post_type( 'mah-download', $args );
+}
+
+/**
+ * Create an inline upload box below title and above content.
+ *
+ * @param WP_Post $post Current post object.
+ * @return void
+ */
+function add_attachment_metabox( $post ) {
+	$post = get_post( $post );
+
+	if ( empty( $post ) || 'mah-download' !== $post->post_type ) {
+		return;
+	}
+
+	wp_nonce_field( 'mah_downloads_attachment', 'mah_downloads_attachment_nonce' );
+?>
+
+	<div id="mah-upload-box" class="media-frame mode-grid">
+		<div id="mah-attachment" class="uploader-inline">
+			<div class="uploader-inline-content no-upload-message">
+				<h2 class="upload-instructions">
+					<?php esc_html_e( 'Drag file here or', 'mah_download' ); ?>
+				</h2>
+				<div class="upload-ui">
+					<a href="#!" class="browser button button-hero select-files">
+						<?php esc_html_e( 'Select file', 'mah_download' ); ?>
+					</a>
+				</div>
+
+				<input type="hidden" id="mah-attachment-id" name="mah-attachment-id" value="">
+			</div>
+		</div>
+	</div>
+<?php	
 }
