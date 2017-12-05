@@ -9,11 +9,15 @@
 	window.Mah.MahDownloadsAdmin = ( function() {
 		const init = function() {
 			const dropper = window.Mah.Dropper,
-				  box = document.getElementById( 'mah-attachment' );
+				  box = document.getElementById( 'mah-attachment' ),
+				  boxContainer = document.getElementById( 'mah-upload-box' );
 
 			if ( ! box ) {
 				return;
 			}
+
+			// Only display the box if we have JS enabled.
+			boxContainer.style.display = 'block';
 
 			box.addEventListener( 'dragover', dropper.dragOver );
 		};
