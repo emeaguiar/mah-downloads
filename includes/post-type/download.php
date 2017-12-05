@@ -24,6 +24,7 @@ function setup() {
 	// Register post type.
 	add_action( 'init',                  $n( 'register' ) );
 	add_action( 'edit_form_after_title', $n( 'add_attachment_metabox' ) );
+	add_action( 'admin_enqueue_scripts',  $n( 'enqueue_scripts' ) );
 }
 
 /**
@@ -96,4 +97,17 @@ function add_attachment_metabox( $post ) {
 		</div>
 	</div>
 <?php	
+}
+
+/**
+ * Enqueue styles and scripts in the admin.
+ * 
+ * @since 1.0
+ * 
+ * @uses wp_enqueue_script()
+ *
+ * @return void
+ */
+function enqueue_scripts() {
+	wp_enqueue_script( 'mah-downloads-admin', MAH_DOWNLOADS_URL . '/assets/js/mah-downloads-admin.js', array( 'jquery' ), MAH_DOWNLOADS_VERSION, true );
 }

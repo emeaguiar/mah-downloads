@@ -2,7 +2,7 @@ module.exports = {
 	options: {
 		transform: [['babelify', { presets: "env" }]],
 		browserifyOptions: {
-			debug: true
+			debug: false
 		},
 		stripBanners: true,
 			banner: '/*! <%= pkg.title %> - v<%= pkg.version %>\n' +

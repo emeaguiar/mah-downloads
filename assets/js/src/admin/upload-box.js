@@ -1,4 +1,4 @@
-( function( window, undefined ) {
+( function() {
 	"use strict";
 
 	// Verify object exists in global scope.
@@ -15,4 +15,6 @@
 			init: init
 		};
 	} )();
-} )( this );
+
+	document.addEventListener( 'DOMContentLoaded', window.Mah.MahDownloadsAdmin.init );
+} )();
