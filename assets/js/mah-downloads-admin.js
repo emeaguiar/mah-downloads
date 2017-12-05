@@ -17,12 +17,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	window.Mah.Dropper = function () {
+		var isOverDropZone = false;
+
 		var init = function init() {
 			console.log('init dropper');
 		};
 
+		var dragOver = function dragOver(event) {
+			event.preventDefault();
+
+			var box = event.currentTarget;
+
+			box.classList.add('droppable');
+			isOverDropZone = true;
+		};
+
 		return {
-			init: init
+			init: init,
+			dragOver: dragOver
 		};
 	}();
 
@@ -45,7 +57,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	window.Mah.MahDownloadsAdmin = function () {
 		var init = function init() {
-			var attachmentBox = document.getElementById('mah-attachment');
+			var dropper = window.Mah.Dropper,
+			    box = document.getElementById('mah-attachment');
+
+			if (!box) {
+				return;
+			}
+
+			box.addEventListener('dragover', dropper.dragOver);
 		};
 
 		return {

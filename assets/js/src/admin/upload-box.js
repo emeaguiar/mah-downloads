@@ -8,7 +8,14 @@
 
 	window.Mah.MahDownloadsAdmin = ( function() {
 		const init = function() {
-			const attachmentBox = document.getElementById( 'mah-attachment' );
+			const dropper = window.Mah.Dropper,
+				  box = document.getElementById( 'mah-attachment' );
+
+			if ( ! box ) {
+				return;
+			}
+
+			box.addEventListener( 'dragover', dropper.dragOver );
 		};
 
 		return {
