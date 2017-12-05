@@ -10,7 +10,7 @@ module.exports = {
 		expand: true,
 
 		cwd: 'assets/css/',
-		src: ['mah-downloads.css'],
+		src: ['*.css', '!*.min.css'],
 
 		dest: 'assets/css/',
 		ext: '.min.css'

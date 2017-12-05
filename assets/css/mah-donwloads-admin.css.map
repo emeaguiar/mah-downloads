@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "mah-donwloads-admin.css",
+	"sources": [
+		"sass/mah-downloads-admin.scss"
+	],
+	"mappings": "AAAA;;;;;;GAMG;AAEF,AAAA,eAAe,CAAC;EACf,OAAO,EAAE,IAAK,GACd",
+	"names": []
+}
