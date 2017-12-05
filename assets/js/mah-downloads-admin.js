@@ -22,9 +22,7 @@ var _timers = require('timers');
 		var isOverDropZone = false,
 		    isOverContainer = false;
 
-		var init = function init() {
-			console.log('init dropper');
-		};
+		var init = function init() {};
 
 		var dragOver = function dragOver(event) {
 			event.preventDefault();
@@ -34,12 +32,16 @@ var _timers = require('timers');
 			box.classList.add('droppable');
 			isOverDropZone = true;
 
-			console.log(box);
-
 			(0, _timers.setTimeout)(refresh, 1);
 		};
 
 		var refresh = function refresh() {
+			var inlineUploader = document.querySelector('.inline-uploader-editor');
+
+			if (!inlineUploader) {
+				return;
+			}
+
 			if (isOverDropZone || isOverContainer) {}
 		};
 
@@ -67,19 +69,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	window.Mah.MahDownloadsAdmin = function () {
-		var init = function init() {
-			var dropper = window.Mah.Dropper,
-			    box = document.getElementById('mah-attachment'),
-			    boxContainer = document.getElementById('mah-upload-box');
+		var cache = {
+			box: document.getElementById('mah-attachment'),
+			boxContainer: document.getElementById('mah-upload-box'),
+			inlineUploaderTmpl: document.getElementById('tmpl-dropper').innerHTML
+		};
 
-			if (!box) {
+		var init = function init() {
+			var dropper = window.Mah.Dropper;
+
+			if (!cache.box) {
 				return;
 			}
 
-			// Only display the box if we have JS enabled.
-			boxContainer.style.display = 'block';
+			displayBoxes();
 
-			box.addEventListener('dragover', dropper.dragOver);
+			cache.box.addEventListener('dragover', dropper.dragOver);
+		};
+
+		var displayBoxes = function displayBoxes() {
+			// Only display the box if we have JS enabled.
+			cache.boxContainer.style.display = 'block';
+
+			cache.inlineUploaderTmpl.replace('{{dropLabel}}', mahI18n.dropLabel);
+			cache.box.appendChild(inlineUploaderTmpl);
 		};
 
 		return {

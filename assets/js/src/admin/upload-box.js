@@ -7,19 +7,30 @@
 	}
 
 	window.Mah.MahDownloadsAdmin = ( function() {
-		const init = function() {
-			const dropper = window.Mah.Dropper,
-				  box = document.getElementById( 'mah-attachment' ),
-				  boxContainer = document.getElementById( 'mah-upload-box' );
+		const cache = {
+			box                : document.getElementById( 'mah-attachment' ),
+			boxContainer       : document.getElementById( 'mah-upload-box' ),
+			inlineUploaderTmpl : document.getElementById( 'tmpl-dropper' ).innerHTML
+		};
 
-			if ( ! box ) {
+		const init = function() {
+			const dropper = window.Mah.Dropper;
+
+			if ( ! cache.box ) {
 				return;
 			}
 
-			// Only display the box if we have JS enabled.
-			boxContainer.style.display = 'block';
+			displayBoxes();
 
-			box.addEventListener( 'dragover', dropper.dragOver );
+			cache.box.addEventListener( 'dragover', dropper.dragOver );
+		};
+
+		const displayBoxes = function() {
+			// Only display the box if we have JS enabled.
+			cache.boxContainer.style.display = 'block';
+			
+			cache.inlineUploaderTmpl.replace( '{{dropLabel}}', mahI18n.dropLabel );
+			cache.box.appendChild( inlineUploaderTmpl );
 		};
 
 		return {

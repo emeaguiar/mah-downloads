@@ -13,7 +13,7 @@ import { setTimeout } from "timers";
 			isOverContainer = false;
 
 		const init = function() {
-			console.log( 'init dropper' );
+
 		};
 
 		const dragOver = function( event ) {
@@ -24,12 +24,16 @@ import { setTimeout } from "timers";
 			box.classList.add( 'droppable' );
 			isOverDropZone = true;
 
-			console.log(box);
-
 			setTimeout( refresh, 1 );
 		};
 
 		const refresh = function() {
+			const inlineUploader = document.querySelector( '.inline-uploader-editor' );
+
+			if ( ! inlineUploader ) {
+				return;
+			}
+
 			if ( isOverDropZone || isOverContainer ) {
 
 			}
