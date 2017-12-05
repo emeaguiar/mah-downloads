@@ -8,7 +8,34 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function () {
-	"use strict";
+	'use strict';
+
+	// Verify object exists in global scope.
+
+	if ('object' !== _typeof(window.Mah)) {
+		window.Mah = {};
+	}
+
+	window.Mah.Dropper = function () {
+		var init = function init() {
+			console.log('init dropper');
+		};
+
+		return {
+			init: init
+		};
+	}();
+
+	document.addEventListener('DOMContentLoaded', window.Mah.Dropper.init);
+})();
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+(function () {
+	'use strict';
 
 	// Verify object exists in global scope.
 
@@ -18,7 +45,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	window.Mah.MahDownloadsAdmin = function () {
 		var init = function init() {
-			console.log('init admin');
+			var attachmentBox = document.getElementById('mah-attachment');
 		};
 
 		return {
@@ -29,4 +56,4 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	document.addEventListener('DOMContentLoaded', window.Mah.MahDownloadsAdmin.init);
 })();
 
-},{}]},{},[1]);
+},{}]},{},[1,2]);
