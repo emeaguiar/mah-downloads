@@ -1,5 +1,5 @@
 <?php
-namespace Mah_Downloads\Core;
+namespace Mah\Mah_Downloads\Core;
 
 /**
  * Default setup routine

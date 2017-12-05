@@ -3,7 +3,7 @@
  * Plugin Name: Mah Downloads
  * Plugin URI:  https://github.com/emeaguiar/mah-downloads
  * Description: Download manager for the new era
- * Version:     0.1.0
+ * Version:     1.0
  * Author:      Mario Aguiar
  * Author URI:  http://marioaguiar.net
  * License:     GPLv2+
@@ -43,11 +43,13 @@ define( 'MAH_DOWNLOADS_INC',     MAH_DOWNLOADS_PATH . 'includes/' );
 
 // Include files
 require_once MAH_DOWNLOADS_INC . 'functions/core.php';
+require_once MAH_DOWNLOADS_INC . 'post-type/download.php';
 
 
 // Activation/Deactivation
-register_activation_hook( __FILE__, '\Mah_Downloads\Core\activate' );
-register_deactivation_hook( __FILE__, '\Mah_Downloads\Core\deactivate' );
+register_activation_hook( __FILE__, 'Mah\Mah_Downloads\Core\activate' );
+register_deactivation_hook( __FILE__, 'Mah\Mah_Downloads\Core\deactivate' );
 
 // Bootstrap
-Mah_Downloads\Core\setup();
+Mah\Mah_Downloads\Core\setup();
+Mah\Mah_Downloads\Post_Type\Download\setup();
