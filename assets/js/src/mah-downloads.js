@@ -1,0 +1,13 @@
+/**
+ * Mah Downloads
+ * https://github.com/emeaguiar/mah-downloads
+ *
+ * Copyright (c) 2017 Mario Aguiar
+ * Licensed under the GPLv2+ license.
+ */
+
+( function( window, undefined ) {
+	'use strict';
+
+
+} )( this );
