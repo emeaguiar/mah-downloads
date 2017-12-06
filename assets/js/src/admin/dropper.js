@@ -13,9 +13,19 @@ import { setTimeout } from "timers";
 	 * 
 	 * @author Mario Aguiar (me@marioaguiar.net)
 	 */
-	window.Mah.Dropper = ( function() {
+	window.Mah.Dropper = ( function() {		
 		let files,
-			manager;
+			mediaManager,
+			uploadManager;
+
+		/**
+		 * Init variables and housekeeping.
+		 */
+		const init = function() {
+			if ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.media ) {
+				mediaManager = wp.media.frames.mahMedia = wp.media();
+			}
+		};
 
 		/**
 		 * Display box when item is dragged to box.
@@ -73,6 +83,7 @@ import { setTimeout } from "timers";
 		 * Return functions to share with other components.
 		 */
 		return {
+			init: init,
 			dragOver: dragOver,
 			dragLeave: dragLeave,
 			drop: drop

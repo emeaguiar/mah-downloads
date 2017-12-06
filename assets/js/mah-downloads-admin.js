@@ -25,7 +25,17 @@ var _timers = require('timers');
   */
 	window.Mah.Dropper = function () {
 		var files = void 0,
-		    manager = void 0;
+		    mediaManager = void 0,
+		    uploadManager = void 0;
+
+		/**
+   * Init variables and housekeeping.
+   */
+		var init = function init() {
+			if ('undefined' !== typeof wp && 'undefined' !== typeof wp.media) {
+				mediaManager = wp.media.frames.mahMedia = wp.media();
+			}
+		};
 
 		/**
    * Display box when item is dragged to box.
@@ -83,6 +93,7 @@ var _timers = require('timers');
    * Return functions to share with other components.
    */
 		return {
+			init: init,
 			dragOver: dragOver,
 			dragLeave: dragLeave,
 			drop: drop
