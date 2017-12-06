@@ -14,7 +14,7 @@ module.exports = {
 	
 	dist: {
 		files: {
-			'assets/js/mah-downloads.js': 'assets/js/mah-downloads.js'
+			'assets/js/mah-downloads.js': 'assets/js/src/mah-downloads.js'
 		}
 	},
 

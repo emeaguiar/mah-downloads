@@ -25,7 +25,7 @@ var _timers = require('timers');
   */
 	window.Mah.Dropper = function () {
 		var files = void 0,
-		    uploadManager = void 0;
+		    manager = void 0;
 
 		/**
    * Display box when item is dragged to box.
