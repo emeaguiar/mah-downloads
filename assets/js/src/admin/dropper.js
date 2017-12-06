@@ -23,7 +23,9 @@ import { setTimeout } from "timers";
 		 */
 		const init = function() {
 			if ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.media ) {
-				mediaManager = wp.media.frames.mahMedia = wp.media();
+				mediaManager = wp.media.frames.mahMedia = wp.media( {
+					title: 
+				} );
 			}
 		};
 

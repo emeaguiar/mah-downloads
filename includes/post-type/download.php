@@ -1,7 +1,7 @@
 <?php
 /**
  * Downloads post type
- * 
+ *
  * @package Mah_Downloads
  */
 
@@ -9,9 +9,9 @@ namespace Mah\Mah_Downloads\Post_Type\Download;
 
 /**
  * Attach hooks.
- * 
+ *
  * @since 1.0
- * 
+ *
  * @uses add_action()
  *
  * @return void
@@ -31,10 +31,11 @@ function setup() {
 
 /**
  * Register mah-download post type
- * 
+ *
  * @since 1.0
- * 
+ *
  * @uses register_post_type()
+ * @uses esc_html__()
  *
  * @return void
  */
@@ -69,6 +70,12 @@ function register() {
 /**
  * Create an inline upload box below title and above content.
  *
+ * @since 1.0
+ *
+ * @uses get_post()
+ * @uses wp_nonce_field()
+ * @uses esc_html_e()
+ *
  * @param WP_Post $post Current post object.
  * @return void
  */
@@ -98,15 +105,17 @@ function add_attachment_metabox( $post ) {
 			</div>
 		</div>
 	</div>
-<?php	
+<?php
 }
 
 /**
  * Enqueue scripts in the admin.
- * 
+ *
  * @since 1.0
- * 
+ *
  * @uses wp_enqueue_script()
+ * @uses wp_localize_script()
+ * @uses esc_html__()
  *
  * @return void
  */
@@ -119,10 +128,28 @@ function enqueue_scripts() {
 	wp_localize_script( 'mah-downloads-admin', 'mahI18n', $mah_i18n_strings );
 }
 
+/**
+ * Enqueue css styles.
+ *
+ * @since 1.0
+ *
+ * @uses wp_enueue_styles()
+ *
+ * @return void
+ */
 function enqueue_styles() {
 	wp_enqueue_style( 'mah-downloads-admin', MAH_DOWNLOADS_URL . '/assets/css/mah-downloads-admin.css', array(), MAH_DOWNLOADS_VERSION );
 }
 
+/**
+ * Print template to be used in JS.
+ *
+ * @since 1.0
+ *
+ * @uses get_post()
+ *
+ * @return void
+ */
 function print_dropper_template() {
 	$post = get_post();
 
