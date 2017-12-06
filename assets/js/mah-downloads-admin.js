@@ -24,6 +24,9 @@ var _timers = require('timers');
   * @author Mario Aguiar (me@marioaguiar.net)
   */
 	window.Mah.Dropper = function () {
+		var files = void 0,
+		    uploadManager = void 0;
+
 		/**
    * Display box when item is dragged to box.
    * @param {*} event 
@@ -53,12 +56,36 @@ var _timers = require('timers');
 		};
 
 		/**
+   * Open media manager after dropping a file
+   * @param {*} event 
+   */
+		var drop = function drop(event) {
+			event.preventDefault();
+			files = event.dataTransfer.files;
+
+			if (1 > files.length) {
+				return;
+			}
+
+			if (!uploadManager) {
+				var uploadView = void 0;
+
+				uploadManager = mediaManager.open();
+				uploadView = uploadManager.uploader;
+			} else {
+				uploadManager.state().reset();
+
+				uploadManager.open();
+			}
+		};
+
+		/**
    * Return functions to share with other components.
    */
 		return {
-			init: init,
 			dragOver: dragOver,
-			dragLeave: dragLeave
+			dragLeave: dragLeave,
+			drop: drop
 		};
 	}();
 
@@ -86,7 +113,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   */
 	window.Mah.MahDownloadsAdmin = function () {
 		/**
-   * Store 
+   * Store variables for future use.
    */
 		var cache = {
 			box: document.getElementById('mah-attachment'),
@@ -109,6 +136,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			cache.box.addEventListener('dragover', dropper.dragOver);
 			cache.box.addEventListener('dragleave', dropper.dragLeave);
+			cache.box.addEventListener('drop', dropper.drop);
 		};
 
 		/**

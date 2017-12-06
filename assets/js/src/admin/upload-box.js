@@ -34,8 +34,9 @@
 
 			displayBoxes();
 
-			cache.box.addEventListener( 'dragover', dropper.dragOver );
+			cache.box.addEventListener( 'dragover',  dropper.dragOver );
 			cache.box.addEventListener( 'dragleave', dropper.dragLeave );
+			cache.box.addEventListener( 'drop',      dropper.drop );
 		};
 
 		/**

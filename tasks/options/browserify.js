@@ -1,6 +1,6 @@
 module.exports = {
 	options: {
-		transform: [['babelify', { presets: "env" }]],
+		transform: [['babelify', { presets: "env", compact: false }]],
 		browserifyOptions: {
 			debug: false
 		},

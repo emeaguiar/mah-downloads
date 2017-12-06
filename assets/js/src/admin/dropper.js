@@ -14,6 +14,9 @@ import { setTimeout } from "timers";
 	 * @author Mario Aguiar (me@marioaguiar.net)
 	 */
 	window.Mah.Dropper = ( function() {
+		let files,
+			manager;
+
 		/**
 		 * Display box when item is dragged to box.
 		 * @param {*} event 
@@ -43,12 +46,36 @@ import { setTimeout } from "timers";
 		};
 
 		/**
+		 * Open media manager after dropping a file
+		 * @param {*} event 
+		 */
+		const drop = function( event ) {
+			event.preventDefault();
+			files = event.dataTransfer.files;
+
+			if ( 1 > files.length )  {
+				return;
+			}
+
+			if ( ! uploadManager ) {
+				let uploadView;
+
+				uploadManager = mediaManager.open();
+				uploadView    = uploadManager.uploader;
+			} else {
+				uploadManager.state().reset();
+
+				uploadManager.open();
+			}
+		};
+
+		/**
 		 * Return functions to share with other components.
 		 */
 		return {
-			init: init,
 			dragOver: dragOver,
-			dragLeave: dragLeave
+			dragLeave: dragLeave,
+			drop: drop
 		};
 	} )();
 
