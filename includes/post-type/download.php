@@ -131,9 +131,11 @@ function print_dropper_template() {
 	}
 ?>
 	<script type="text/template" id="tmpl-dropper">
-		<div class="inline-uploader-editor">
-			<div class="uploader-editor-content">
-				{{dropLabel}}
+		<div class="inline-uploader" id="mah-inline-uploader">
+			<div class="content">
+				<span class="title">
+					{{dropLabel}}
+				</span>
 			</div>
 		</div>
 	</script>

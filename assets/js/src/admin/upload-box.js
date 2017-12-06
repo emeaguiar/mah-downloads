@@ -1,4 +1,4 @@
-( function() {
+( function( $ ) {
 	'use strict';
 
 	// Verify object exists in global scope.
@@ -13,6 +13,10 @@
 			inlineUploaderTmpl : document.getElementById( 'tmpl-dropper' ).innerHTML
 		};
 
+		/**
+		 * Init functionality.
+		 * Attach events.
+		 */
 		const init = function() {
 			const dropper = window.Mah.Dropper;
 
@@ -25,12 +29,19 @@
 			cache.box.addEventListener( 'dragover', dropper.dragOver );
 		};
 
+		/**
+		 * Only display upload box if there's Javascript enabled.
+		 * It's 2017 after all.
+		 * 
+		 * @return void.
+		 */
 		const displayBoxes = function() {
-			// Only display the box if we have JS enabled.
 			cache.boxContainer.style.display = 'block';
 			
-			cache.inlineUploaderTmpl.replace( '{{dropLabel}}', mahI18n.dropLabel );
-			cache.box.appendChild( inlineUploaderTmpl );
+			cache.inlineUploaderTmpl = cache.inlineUploaderTmpl.replace( '{{dropLabel}}', mahI18n.dropLabel );
+			
+			// Append with jQuery so we don't use innerHTML.
+			$( cache.box ).append( cache.inlineUploaderTmpl );
 		};
 
 		return {
@@ -39,4 +50,4 @@
 	} )();
 
 	document.addEventListener( 'DOMContentLoaded', window.Mah.MahDownloadsAdmin.init );
-} )();
+} )( jQuery );

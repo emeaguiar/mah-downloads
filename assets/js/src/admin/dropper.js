@@ -19,16 +19,17 @@ import { setTimeout } from "timers";
 		const dragOver = function( event ) {
 			event.preventDefault();
 			
-			let box = event.currentTarget;
+			let box = event.currentTarget,
+				uploaderBox = box.querySelector( '.inline-uploader' );
 
-			box.classList.add( 'droppable' );
+			uploaderBox.classList.add( '-droppable' );
 			isOverDropZone = true;
 
 			setTimeout( refresh, 1 );
 		};
 
 		const refresh = function() {
-			const inlineUploader = document.querySelector( '.inline-uploader-editor' );
+			const inlineUploader = document.querySelector( '.inline-uploader' );
 
 			if ( ! inlineUploader ) {
 				return;

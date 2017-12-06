@@ -27,16 +27,17 @@ var _timers = require('timers');
 		var dragOver = function dragOver(event) {
 			event.preventDefault();
 
-			var box = event.currentTarget;
+			var box = event.currentTarget,
+			    uploaderBox = box.querySelector('.inline-uploader');
 
-			box.classList.add('droppable');
+			uploaderBox.classList.add('-droppable');
 			isOverDropZone = true;
 
 			(0, _timers.setTimeout)(refresh, 1);
 		};
 
 		var refresh = function refresh() {
-			var inlineUploader = document.querySelector('.inline-uploader-editor');
+			var inlineUploader = document.querySelector('.inline-uploader');
 
 			if (!inlineUploader) {
 				return;
@@ -59,7 +60,7 @@ var _timers = require('timers');
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-(function () {
+(function ($) {
 	'use strict';
 
 	// Verify object exists in global scope.
@@ -75,6 +76,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			inlineUploaderTmpl: document.getElementById('tmpl-dropper').innerHTML
 		};
 
+		/**
+   * Init functionality.
+   * Attach events.
+   */
 		var init = function init() {
 			var dropper = window.Mah.Dropper;
 
@@ -87,12 +92,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			cache.box.addEventListener('dragover', dropper.dragOver);
 		};
 
+		/**
+   * Only display upload box if there's Javascript enabled.
+   * It's 2017 after all.
+   * 
+   * @return void.
+   */
 		var displayBoxes = function displayBoxes() {
-			// Only display the box if we have JS enabled.
 			cache.boxContainer.style.display = 'block';
 
-			cache.inlineUploaderTmpl.replace('{{dropLabel}}', mahI18n.dropLabel);
-			cache.box.appendChild(inlineUploaderTmpl);
+			cache.inlineUploaderTmpl = cache.inlineUploaderTmpl.replace('{{dropLabel}}', mahI18n.dropLabel);
+
+			// Append with jQuery so we don't use innerHTML.
+			$(cache.box).append(cache.inlineUploaderTmpl);
 		};
 
 		return {
@@ -101,7 +113,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}();
 
 	document.addEventListener('DOMContentLoaded', window.Mah.MahDownloadsAdmin.init);
-})();
+})(jQuery);
 
 },{}],3:[function(require,module,exports){
 // shim for using process in browser
