@@ -18,36 +18,43 @@ var _timers = require('timers');
 		window.Mah = {};
 	}
 
+	/**
+  * Helper functions for drag/drop functionality.
+  * 
+  * @author Mario Aguiar (me@marioaguiar.net)
+  */
 	window.Mah.Dropper = function () {
-		var isOverDropZone = false,
-		    isOverContainer = false;
-
-		var init = function init() {};
-
+		/**
+   * Display box when item is dragged to box.
+   * @param {*} event 
+   */
 		var dragOver = function dragOver(event) {
 			event.preventDefault();
 
 			var box = event.currentTarget,
 			    uploaderBox = box.querySelector('.inline-uploader');
 
-			isOverDropZone = true;
-
 			(0, _timers.setTimeout)(function () {
 				uploaderBox.classList.add('-droppable');
 			}, 1);
 		};
 
+		/**
+   * Remove box overlay when item is dragged away from box.
+   * @param {*} event 
+   */
 		var dragLeave = function dragLeave(event) {
 			var box = event.currentTarget,
 			    uploaderBox = box.querySelector('.inline-uploader');
-
-			isOverDropZone = false;
 
 			(0, _timers.setTimeout)(function () {
 				uploaderBox.classList.remove('-droppable');
 			}, 1);
 		};
 
+		/**
+   * Return functions to share with other components.
+   */
 		return {
 			init: init,
 			dragOver: dragOver,
@@ -72,7 +79,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		window.Mah = {};
 	}
 
+	/**
+  * Handles uploads within the content type.
+  * 
+  * @author Mario Aguiar me@marioaguiar.net
+  */
 	window.Mah.MahDownloadsAdmin = function () {
+		/**
+   * Store 
+   */
 		var cache = {
 			box: document.getElementById('mah-attachment'),
 			boxContainer: document.getElementById('mah-upload-box'),

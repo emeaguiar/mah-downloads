@@ -6,7 +6,15 @@
 		window.Mah = {};
 	}
 
+	/**
+	 * Handles uploads within the content type.
+	 * 
+	 * @author Mario Aguiar me@marioaguiar.net
+	 */
 	window.Mah.MahDownloadsAdmin = ( function() {
+		/**
+		 * Store variables for future use.
+		 */
 		const cache = {
 			box                : document.getElementById( 'mah-attachment' ),
 			boxContainer       : document.getElementById( 'mah-upload-box' ),

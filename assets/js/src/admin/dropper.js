@@ -8,38 +8,43 @@ import { setTimeout } from "timers";
 		window.Mah = {};
 	}
 
+	/**
+	 * Helper functions for drag/drop functionality.
+	 * 
+	 * @author Mario Aguiar (me@marioaguiar.net)
+	 */
 	window.Mah.Dropper = ( function() {
-		let isOverDropZone = false,
-			isOverContainer = false;
-
-		const init = function() {
-
-		};
-
+		/**
+		 * Display box when item is dragged to box.
+		 * @param {*} event 
+		 */
 		const dragOver = function( event ) {
 			event.preventDefault();
 			
 			const box = event.currentTarget,
 				  uploaderBox = box.querySelector( '.inline-uploader' );
 
-			isOverDropZone = true;
-
 			setTimeout( function() {
 				uploaderBox.classList.add( '-droppable' );
 			}, 1 );
 		};
 
+		/**
+		 * Remove box overlay when item is dragged away from box.
+		 * @param {*} event 
+		 */
 		const dragLeave = function( event ) {
 			const box = event.currentTarget,
 				  uploaderBox = box.querySelector( '.inline-uploader' );
-
-			isOverDropZone = false;
 
 			setTimeout( function() {
 				uploaderBox.classList.remove( '-droppable' );
 			}, 1 );
 		};
 
+		/**
+		 * Return functions to share with other components.
+		 */
 		return {
 			init: init,
 			dragOver: dragOver,
