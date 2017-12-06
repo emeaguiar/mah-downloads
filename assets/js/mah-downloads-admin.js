@@ -82,11 +82,34 @@ var _timers = require('timers');
 
 				uploadManager = mediaManager.open();
 				uploadView = uploadManager.uploader;
+
+				if (uploadView.uploader && uploadView.uploader.ready) {
+					addFiles();
+				} else {
+					uploadManager.on('uploader:ready', addFiles);
+				}
 			} else {
 				uploadManager.state().reset();
 
+				addFiles();
 				uploadManager.open();
 			}
+		};
+
+		var addFiles = function addFiles() {
+			if (1 > files.length) {
+				return;
+			}
+
+			if (1 < files.length) {
+				// Let 'em know only one file per post is allowed.
+			}
+
+			var file = files[0];
+
+			uploadManager.uploader.uploader.uploader.addFile(file[0]);
+
+			files = [];
 		};
 
 		/**
