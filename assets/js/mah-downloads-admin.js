@@ -30,25 +30,28 @@ var _timers = require('timers');
 			var box = event.currentTarget,
 			    uploaderBox = box.querySelector('.inline-uploader');
 
-			uploaderBox.classList.add('-droppable');
 			isOverDropZone = true;
 
-			(0, _timers.setTimeout)(refresh, 1);
+			(0, _timers.setTimeout)(function () {
+				uploaderBox.classList.add('-droppable');
+			}, 1);
 		};
 
-		var refresh = function refresh() {
-			var inlineUploader = document.querySelector('.inline-uploader');
+		var dragLeave = function dragLeave(event) {
+			var box = event.currentTarget,
+			    uploaderBox = box.querySelector('.inline-uploader');
 
-			if (!inlineUploader) {
-				return;
-			}
+			isOverDropZone = false;
 
-			if (isOverDropZone || isOverContainer) {}
+			(0, _timers.setTimeout)(function () {
+				uploaderBox.classList.remove('-droppable');
+			}, 1);
 		};
 
 		return {
 			init: init,
-			dragOver: dragOver
+			dragOver: dragOver,
+			dragLeave: dragLeave
 		};
 	}();
 
@@ -90,6 +93,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			displayBoxes();
 
 			cache.box.addEventListener('dragover', dropper.dragOver);
+			cache.box.addEventListener('dragleave', dropper.dragLeave);
 		};
 
 		/**

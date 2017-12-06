@@ -19,30 +19,31 @@ import { setTimeout } from "timers";
 		const dragOver = function( event ) {
 			event.preventDefault();
 			
-			let box = event.currentTarget,
-				uploaderBox = box.querySelector( '.inline-uploader' );
+			const box = event.currentTarget,
+				  uploaderBox = box.querySelector( '.inline-uploader' );
 
-			uploaderBox.classList.add( '-droppable' );
 			isOverDropZone = true;
 
-			setTimeout( refresh, 1 );
+			setTimeout( function() {
+				uploaderBox.classList.add( '-droppable' );
+			}, 1 );
 		};
 
-		const refresh = function() {
-			const inlineUploader = document.querySelector( '.inline-uploader' );
+		const dragLeave = function( event ) {
+			const box = event.currentTarget,
+				  uploaderBox = box.querySelector( '.inline-uploader' );
 
-			if ( ! inlineUploader ) {
-				return;
-			}
+			isOverDropZone = false;
 
-			if ( isOverDropZone || isOverContainer ) {
-
-			}
+			setTimeout( function() {
+				uploaderBox.classList.remove( '-droppable' );
+			}, 1 );
 		};
 
 		return {
 			init: init,
-			dragOver: dragOver
+			dragOver: dragOver,
+			dragLeave: dragLeave
 		};
 	} )();
 
