@@ -3,5 +3,8 @@ module.exports = {
 		'Gruntfile.js',
 		'assets/js/src/**/*.js',
 		'assets/js/test/**/*.js'
-	]
+	],
+	options: {
+		esnext: true
+	}
 };

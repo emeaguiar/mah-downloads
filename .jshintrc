@@ -16,5 +16,5 @@
 		"console":  true,
 		"document": true,
 		"window":   true,
-	}
+	},
 }
