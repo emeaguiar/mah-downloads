@@ -100,10 +100,6 @@ var _timers = require('timers');
 				return;
 			}
 
-			if (1 < files.length) {
-				// Let 'em know only one file per post is allowed.
-			}
-
 			uploadManager.uploader.uploader.uploader.addFile(_.toArray(files));
 
 			files = [];
@@ -189,6 +185,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 						text: mahI18n.button
 					}
 				});
+
+				cache.mediaManager.on('select', attachFile);
 			}
 		};
 
@@ -207,10 +205,31 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			$(cache.box).append(cache.inlineUploaderTmpl);
 		};
 
+		/**
+   * Open WP media uploader.
+   * 
+   * @param {*} event - Triggered event.
+   */
 		var openUploader = function openUploader(event) {
 			event.preventDefault();
-
 			cache.mediaManager.open();
+		};
+
+		/**
+   * Populates the hidden field with the attachment ID.
+   * We'll use this to attach a file to a download on save.
+   * 
+   * @param {event} event - Triggered Event
+   */
+		var attachFile = function attachFile(event) {
+			var attachment = cache.mediaManager.state().get('selection').first().toJSON(),
+			    attachmentField = document.getElementById('mah-attachment-id');
+
+			if (!attachmentField) {
+				return;
+			}
+
+			attachmentField.value = attachment.id;
 		};
 
 		return {

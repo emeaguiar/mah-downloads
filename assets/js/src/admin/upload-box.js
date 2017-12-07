@@ -59,6 +59,8 @@
 						text: mahI18n.button
 					}
 				} );
+
+				cache.mediaManager.on( 'select', attachFile );
 			}
 		};
 
@@ -77,10 +79,31 @@
 			$( cache.box ).append( cache.inlineUploaderTmpl );
 		};
 
+		/**
+		 * Open WP media uploader.
+		 * 
+		 * @param {*} event - Triggered event.
+		 */
 		const openUploader = function( event ) {
 			event.preventDefault();
-
 			cache.mediaManager.open();
+		};
+
+		/**
+		 * Populates the hidden field with the attachment ID.
+		 * We'll use this to attach a file to a download on save.
+		 * 
+		 * @param {event} event - Triggered Event
+		 */
+		const attachFile = function( event ) {
+			const attachment = cache.mediaManager.state().get( 'selection' ).first().toJSON(),
+				  attachmentField = document.getElementById( 'mah-attachment-id' );
+
+			if ( ! attachmentField ) {
+				return;
+			}
+
+			attachmentField.value = attachment.id;			
 		};
 
 		return {

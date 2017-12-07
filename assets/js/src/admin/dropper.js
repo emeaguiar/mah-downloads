@@ -90,10 +90,6 @@ import { setTimeout } from "timers";
 				return;
 			}
 
-			if ( 1 < files.length ) {
-				// Let 'em know only one file per post is allowed.
-			}
-
 			uploadManager.uploader.uploader.uploader.addFile( _.toArray( files ) );
 
 			files = [];
