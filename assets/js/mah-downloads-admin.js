@@ -63,6 +63,9 @@ var _timers = require('timers');
 			event.preventDefault();
 			files = event.dataTransfer.files;
 
+			var box = event.currentTarget,
+			    uploaderBox = box.querySelector('.inline-uploader');
+
 			if (1 > files.length) {
 				return;
 			}
@@ -70,7 +73,7 @@ var _timers = require('timers');
 			if (!uploadManager) {
 				var uploadView = void 0;
 
-				uploadManager = mediaManager.open();
+				uploadManager = wp.media.frames.mahMedia.open();
 				uploadView = uploadManager.uploader;
 
 				if (uploadView.uploader && uploadView.uploader.ready) {
@@ -84,10 +87,15 @@ var _timers = require('timers');
 				addFiles();
 				uploadManager.open();
 			}
+
+			// Restore box to original state.
+			uploaderBox.classList.remove('-droppable');
 		};
 
+		/**
+   * Upload files through the uploader automatically.
+   */
 		var addFiles = function addFiles() {
-			console.log('adding files');
 			if (1 > files.length) {
 				return;
 			}

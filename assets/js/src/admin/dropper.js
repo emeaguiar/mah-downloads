@@ -53,6 +53,9 @@ import { setTimeout } from "timers";
 			event.preventDefault();
 			files = event.dataTransfer.files;
 
+			const box = event.currentTarget,
+				  uploaderBox = box.querySelector( '.inline-uploader' );
+
 			if ( 1 > files.length )  {
 				return;
 			}
@@ -60,7 +63,7 @@ import { setTimeout } from "timers";
 			if ( ! uploadManager ) {
 				let uploadView;
 
-				uploadManager = mediaManager.open();
+				uploadManager = wp.media.frames.mahMedia.open();
 				uploadView    = uploadManager.uploader;
 
 				if ( uploadView.uploader && uploadView.uploader.ready ) {
@@ -74,10 +77,15 @@ import { setTimeout } from "timers";
 				addFiles();
 				uploadManager.open();
 			}
+
+			// Restore box to original state.
+			uploaderBox.classList.remove( '-droppable' );
 		};
 
+		/**
+		 * Upload files through the uploader automatically.
+		 */
 		const addFiles = function() {
-			console.log('adding files');
 			if ( 1 > files.length ) {
 				return;
 			}
