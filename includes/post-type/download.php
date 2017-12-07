@@ -124,8 +124,8 @@ function enqueue_scripts() {
 
 	$mah_i18n_strings = array(
 		'dropLabel' => esc_html__( 'Drop one file to be uploaded', 'mah_download' ),
-		'boxTitle'  => esc_html__( 'Upload file', 'mah_download' ),
-		'button'    => esc_html__( 'Accept', 'mah_download' ),
+		'boxTitle'  => esc_html__( 'Attach file to download', 'mah_download' ),
+		'button'    => esc_html__( 'Attach', 'mah_download' ),
 	);
 	wp_localize_script( 'mah-downloads-admin', 'mahI18n', $mah_i18n_strings );
 }

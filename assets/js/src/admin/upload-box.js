@@ -54,7 +54,7 @@
 			if ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.media ) {
 				cache.mediaManager = wp.media.frames.mahMedia = wp.media( {
 					multiple: false,
-					title: mahI18n.title,
+					title: mahI18n.boxTitle,
 					button: {
 						text: mahI18n.button
 					}
