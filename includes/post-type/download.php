@@ -27,6 +27,7 @@ function setup() {
 	add_action( 'admin_enqueue_scripts', $n( 'enqueue_scripts' ) );
 	add_action( 'admin_enqueue_scripts', $n( 'enqueue_styles' ) );
 	add_action( 'admin_footer',          $n( 'print_dropper_template' ) );
+	add_action( 'save_post',             $n( 'save_download_file' ) );
 }
 
 /**
@@ -169,4 +170,39 @@ function print_dropper_template() {
 		</div>
 	</script>
 <?php
+}
+
+/**
+ * Save attached file relationship.
+ * Since attachments are technically post, set a parent/child relationship.
+ *
+ * @param [type] $post_id - Current post
+ * @return void
+ */
+function save_download_file( $post_id ) {
+	$post = get_post( $post_id );
+
+	if ( ! $post ) {
+		return;
+	}
+
+	// Break these down to make them readable.
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( 'mah_downloads_attachment_nonce', 'mah_downloads_attachment' ) ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	$file_id = filter_input( INPUT_POST, 'mah-attachment-id', FILTER_SANITIZE_NUMBER_INT );
+
+	wp_update_post( array(
+		'ID'          => absint( $file_id ),
+		'post_parent' => absint( $post->ID ),
+	) );
 }
