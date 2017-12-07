@@ -24,7 +24,11 @@ import { setTimeout } from "timers";
 		const init = function() {
 			if ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.media ) {
 				mediaManager = wp.media.frames.mahMedia = wp.media( {
-					title: 
+					multiple: false,
+					title: mahI18n.title,
+					button: {
+						text: mahI18n.button
+					}
 				} );
 			}
 		};
@@ -89,6 +93,7 @@ import { setTimeout } from "timers";
 		};
 
 		const addFiles = function() {
+			console.log('adding files');
 			if ( 1 > files.length ) {
 				return;
 			}
@@ -97,9 +102,7 @@ import { setTimeout } from "timers";
 				// Let 'em know only one file per post is allowed.
 			}
 
-			const file = files[0];
-
-			uploadManager.uploader.uploader.uploader.addFile( file[0] );
+			uploadManager.uploader.uploader.uploader.addFile( _.toArray( files ) );
 
 			files = [];
 		};
