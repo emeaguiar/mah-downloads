@@ -21,31 +21,15 @@ var _timers = require('timers');
 	/**
   * Helper functions for drag/drop functionality.
   * 
-  * @author Mario Aguiar (me@marioaguiar.net)
+  * @author Mario Aguiar <me@marioaguiar.net>
   */
 	window.Mah.Dropper = function () {
 		var files = void 0,
-		    mediaManager = void 0,
 		    uploadManager = void 0;
 
 		/**
-   * Init variables and housekeeping.
-   */
-		var init = function init() {
-			if ('undefined' !== typeof wp && 'undefined' !== typeof wp.media) {
-				mediaManager = wp.media.frames.mahMedia = wp.media({
-					multiple: false,
-					title: mahI18n.title,
-					button: {
-						text: mahI18n.button
-					}
-				});
-			}
-		};
-
-		/**
    * Display box when item is dragged to box.
-   * @param {*} event 
+   * @param {event} event - Triggered Event
    */
 		var dragOver = function dragOver(event) {
 			event.preventDefault();
@@ -121,7 +105,6 @@ var _timers = require('timers');
    * Return functions to share with other components.
    */
 		return {
-			init: init,
 			dragOver: dragOver,
 			dragLeave: dragLeave,
 			drop: drop
@@ -148,7 +131,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	/**
   * Handles uploads within the content type.
   * 
-  * @author Mario Aguiar me@marioaguiar.net
+  * @author Mario Aguiar <me@marioaguiar.net>
   */
 	window.Mah.MahDownloadsAdmin = function () {
 		/**
@@ -157,7 +140,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		var cache = {
 			box: document.getElementById('mah-attachment'),
 			boxContainer: document.getElementById('mah-upload-box'),
-			inlineUploaderTmpl: document.getElementById('tmpl-dropper').innerHTML
+			inlineUploaderTmpl: document.getElementById('tmpl-dropper').innerHTML,
+			mediaManager: null
 		};
 
 		/**
@@ -172,10 +156,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 
 			displayBoxes();
+			initMediaFrame();
 
 			cache.box.addEventListener('dragover', dropper.dragOver);
 			cache.box.addEventListener('dragleave', dropper.dragLeave);
 			cache.box.addEventListener('drop', dropper.drop);
+
+			var uploadButton = cache.box.querySelector('.select-files');
+
+			if (uploadButton) {
+				uploadButton.addEventListener('click', openUploader);
+			}
+		};
+
+		/**
+   * Create an instance of the media uploader for later use.
+   */
+		var initMediaFrame = function initMediaFrame() {
+			if ('undefined' !== typeof wp && 'undefined' !== typeof wp.media) {
+				cache.mediaManager = wp.media.frames.mahMedia = wp.media({
+					multiple: false,
+					title: mahI18n.title,
+					button: {
+						text: mahI18n.button
+					}
+				});
+			}
 		};
 
 		/**
@@ -191,6 +197,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			// Append with jQuery so we don't use innerHTML.
 			$(cache.box).append(cache.inlineUploaderTmpl);
+		};
+
+		var openUploader = function openUploader(event) {
+			event.preventDefault();
+
+			cache.mediaManager.open();
 		};
 
 		return {

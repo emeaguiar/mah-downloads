@@ -9,7 +9,7 @@
 	/**
 	 * Handles uploads within the content type.
 	 * 
-	 * @author Mario Aguiar me@marioaguiar.net
+	 * @author Mario Aguiar <me@marioaguiar.net>
 	 */
 	window.Mah.MahDownloadsAdmin = ( function() {
 		/**
@@ -18,7 +18,8 @@
 		const cache = {
 			box                : document.getElementById( 'mah-attachment' ),
 			boxContainer       : document.getElementById( 'mah-upload-box' ),
-			inlineUploaderTmpl : document.getElementById( 'tmpl-dropper' ).innerHTML
+			inlineUploaderTmpl : document.getElementById( 'tmpl-dropper' ).innerHTML,
+			mediaManager       : null
 		};
 
 		/**
@@ -33,10 +34,32 @@
 			}
 
 			displayBoxes();
+			initMediaFrame();
 
 			cache.box.addEventListener( 'dragover',  dropper.dragOver );
 			cache.box.addEventListener( 'dragleave', dropper.dragLeave );
 			cache.box.addEventListener( 'drop',      dropper.drop );
+
+			const uploadButton = cache.box.querySelector( '.select-files' );
+
+			if ( uploadButton ) {
+				uploadButton.addEventListener( 'click', openUploader );
+			}
+		};
+
+		/**
+		 * Create an instance of the media uploader for later use.
+		 */
+		const initMediaFrame = function() {
+			if ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.media ) {
+				cache.mediaManager = wp.media.frames.mahMedia = wp.media( {
+					multiple: false,
+					title: mahI18n.title,
+					button: {
+						text: mahI18n.button
+					}
+				} );
+			}
 		};
 
 		/**
@@ -52,6 +75,12 @@
 			
 			// Append with jQuery so we don't use innerHTML.
 			$( cache.box ).append( cache.inlineUploaderTmpl );
+		};
+
+		const openUploader = function( event ) {
+			event.preventDefault();
+
+			cache.mediaManager.open();
 		};
 
 		return {

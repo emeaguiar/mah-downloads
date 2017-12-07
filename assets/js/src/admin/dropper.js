@@ -11,31 +11,15 @@ import { setTimeout } from "timers";
 	/**
 	 * Helper functions for drag/drop functionality.
 	 * 
-	 * @author Mario Aguiar (me@marioaguiar.net)
+	 * @author Mario Aguiar <me@marioaguiar.net>
 	 */
 	window.Mah.Dropper = ( function() {		
 		let files,
-			mediaManager,
 			uploadManager;
 
 		/**
-		 * Init variables and housekeeping.
-		 */
-		const init = function() {
-			if ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.media ) {
-				mediaManager = wp.media.frames.mahMedia = wp.media( {
-					multiple: false,
-					title: mahI18n.title,
-					button: {
-						text: mahI18n.button
-					}
-				} );
-			}
-		};
-
-		/**
 		 * Display box when item is dragged to box.
-		 * @param {*} event 
+		 * @param {event} event - Triggered Event
 		 */
 		const dragOver = function( event ) {
 			event.preventDefault();
@@ -111,7 +95,6 @@ import { setTimeout } from "timers";
 		 * Return functions to share with other components.
 		 */
 		return {
-			init: init,
 			dragOver: dragOver,
 			dragLeave: dragLeave,
 			drop: drop
