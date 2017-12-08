@@ -87,23 +87,41 @@ function add_attachment_metabox( $post ) {
 		return;
 	}
 
+	$download_file = get_download_file( $post );
+
 	wp_nonce_field( 'mah_downloads_attachment', 'mah_downloads_attachment_nonce' );
 ?>
 
 	<div id="mah-upload-box" class="media-frame mode-grid">
 		<div id="mah-attachment" class="uploader-inline">
-			<div class="uploader-inline-content no-upload-message">
-				<h2 class="upload-instructions">
-					<?php esc_html_e( 'Drag file here or', 'mah_download' ); ?>
-				</h2>
-				<div class="upload-ui">
-					<a href="#!" class="browser button button-hero select-files">
-						<?php esc_html_e( 'Select file', 'mah_download' ); ?>
-					</a>
-				</div>
+			<?php if ( empty( $download_file ) ) : ?>
+				<div class="uploader-inline-content no-upload-message">
+					<h2 class="instructions">
+						<?php esc_html_e( 'Drag file here or', 'mah_download' ); ?>
+					</h2>
+					<div class="upload-ui box">
+						<a href="#!" class="browser button button-hero select-files">
+							<?php esc_html_e( 'Select file', 'mah_download' ); ?>
+						</a>
+					</div>
 
-				<input type="hidden" id="mah-attachment-id" name="mah-attachment-id" value="">
-			</div>
+					<input type="hidden" id="mah-attachment-id" name="mah-attachment-id" value="">
+				</div>
+			<?php else : ?>
+				<div class="downloads">
+					<div class="download-preview">
+						<div class="image">
+							<img src="<?php echo esc_url( home_url( '/wp-includes/images/media/document.png' ) ); ?>" class="icon" draggable="false" alt="">
+						</div>
+
+						<div class="details">
+							<span class="title"></span>
+							<span class="size"></span>
+							<span class="type"></span>
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 <?php
@@ -191,7 +209,9 @@ function save_download_file( $post_id ) {
 		return;
 	}
 
-	if ( ! wp_verify_nonce( 'mah_downloads_attachment_nonce', 'mah_downloads_attachment' ) ) {
+	$nonce = filter_input( INPUT_POST, 'mah_downloads_attachment_nonce', FILTER_SANITIZE_STRING );
+
+	if ( ! wp_verify_nonce( $nonce, 'mah_downloads_attachment' ) ) {
 		return;
 	}
 
@@ -202,7 +222,43 @@ function save_download_file( $post_id ) {
 	$file_id = filter_input( INPUT_POST, 'mah-attachment-id', FILTER_SANITIZE_NUMBER_INT );
 
 	wp_update_post( array(
-		'ID'          => absint( $file_id ),
-		'post_parent' => absint( $post->ID ),
+		'ID'          => $file_id,
+		'post_parent' => $post->ID,
 	) );
+
+	return true;
+}
+
+/**
+ * Returns cached file attached to download.
+ * Saves file in cache if not already.
+ *
+ * @param WP_Post $post - Current post.
+ * @return void|array - Attached file.
+ */
+function get_download_file( $post ) {
+	$post = get_post( $post );
+
+	if ( ! $post ) {
+		return;
+	}
+
+	$key         = sprintf( 'mah-download-attached-file-%d', absint( $post->ID ) );
+	$cached_file = wp_cache_get( $key );
+
+	if ( $cached_file ) {
+		return $cached_file;
+	}
+
+	$query = new \WP_Query( array(
+		'post_type'   => 'attachment',
+		'post_parent' => $post->ID,
+		'post_status' => 'inherit',
+	) );
+
+	$file = $query->posts;
+
+	wp_cache_set( $key, $file );
+
+	return $file;
 }
