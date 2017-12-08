@@ -87,7 +87,7 @@ function add_attachment_metabox( $post ) {
 		return;
 	}
 
-	$download_file = get_download_file( $post );
+	$download_file = array_shift( get_download_file( $post ) );
 
 	wp_nonce_field( 'mah_downloads_attachment', 'mah_downloads_attachment_nonce' );
 ?>
@@ -108,6 +108,10 @@ function add_attachment_metabox( $post ) {
 					<input type="hidden" id="mah-attachment-id" name="mah-attachment-id" value="">
 				</div>
 			<?php else : ?>
+				<?php
+				$size = get_file_size( $download_file );
+				$type = get_post_mime_type( $download_file->ID );
+				?>
 				<div class="downloads">
 					<div class="download-preview">
 						<div class="image">
@@ -115,9 +119,19 @@ function add_attachment_metabox( $post ) {
 						</div>
 
 						<div class="details">
-							<span class="title"></span>
-							<span class="size"></span>
-							<span class="type"></span>
+							<span class="title">
+								<?php printf( esc_html__( 'Title: %s', 'mah_donwloads' ), $download_file->post_title ); ?>
+							</span>
+							<?php if ( ! empty( $size ) ) : ?>
+								<span class="size">
+									<?php printf( esc_html__( 'Size: %s', 'mah_downloads' ), $size ); ?>
+								</span>
+							<?php endif; ?>
+							<?php if ( ! empty( $type ) ) : ?>
+								<span class="type">
+									<?php printf( esc_html__( 'Type: %s', 'mah_downloads' ), $type ); ?>
+								</span>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
@@ -261,4 +275,22 @@ function get_download_file( $post ) {
 	wp_cache_set( $key, $file );
 
 	return $file;
+}
+
+/**
+ * Gets a file size and returns it in a readable format.
+ *
+ * @param WP_Post $file - File to meassure.
+ * @return string|bool - Size string, false on failure.
+ */
+function get_file_size( $file ) {
+	$post = get_post( $file );
+
+	if ( ! $post ) {
+		return;
+	}
+
+	$size_in_bytes = filesize( get_attached_file( $post->ID ) );
+
+	return size_format( $size_in_bytes );
 }
