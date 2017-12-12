@@ -42,4 +42,21 @@
 			width: 100%;
 		}
 	}
+
+	.download-preview {
+		align-items: center;
+		display: flex;
+		margin: auto;
+		padding: 20px;
+		width: 50%;
+
+		> .image {
+			flex: 0 1 78px;
+			margin: 0 10px;
+		}
+
+		.details {
+			text-align: left;
+		}
+	}
 }

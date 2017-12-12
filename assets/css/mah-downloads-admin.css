@@ -37,5 +37,16 @@
       left: 0;
       transform: translateY(-50%);
       width: 100%; }
+  #mah-upload-box .download-preview {
+    align-items: center;
+    display: flex;
+    margin: auto;
+    padding: 20px;
+    width: 50%; }
+    #mah-upload-box .download-preview > .image {
+      flex: 0 1 78px;
+      margin: 0 10px; }
+    #mah-upload-box .download-preview .details {
+      text-align: left; }
 
 /*# sourceMappingURL=mah-downloads-admin.css.map */
