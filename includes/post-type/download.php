@@ -119,18 +119,21 @@ function add_attachment_metabox( $post ) {
 						</div>
 
 						<div class="details">
-							<span class="title">
-								<?php printf( esc_html__( 'Title: %s', 'mah_donwloads' ), $download_file->post_title ); ?>
-							</span>
+							<p class="title">
+								<strong><?php esc_html_e( 'Title', 'mah_downloads' ); ?></strong>: 
+								<?php echo esc_html( $download_file->post_title ); ?>
+							</p>
 							<?php if ( ! empty( $size ) ) : ?>
-								<span class="size">
-									<?php printf( esc_html__( 'Size: %s', 'mah_downloads' ), $size ); ?>
-								</span>
+								<p class="size">
+									<strong><?php esc_html_e( 'Size', 'mah_downloads' ); ?></strong>: 
+									<?php echo esc_html( $size ); ?>
+								</p>
 							<?php endif; ?>
 							<?php if ( ! empty( $type ) ) : ?>
-								<span class="type">
-									<?php printf( esc_html__( 'Type: %s', 'mah_downloads' ), $type ); ?>
-								</span>
+								<p class="type">
+									<strong><?php esc_html_e( 'Type', 'mah_downloads' ); ?></strong>: 
+									<?php echo esc_html( $type ); ?>
+								</p>
 							<?php endif; ?>
 						</div>
 					</div>
