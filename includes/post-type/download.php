@@ -109,14 +109,17 @@ function add_attachment_metabox( $post ) {
 				</div>
 			<?php else : ?>
 				<?php
-				$size = get_file_size( $download_file );
-				$type = get_post_mime_type( $download_file->ID );
+				$size  = get_file_size( $download_file );
+				$type  = get_post_mime_type( $download_file->ID );
+				$image = wp_get_attachment_image_url( $download_file->ID, 'thumbnail', true );
 				?>
 				<div class="downloads">
 					<div class="download-preview">
-						<div class="image">
-							<img src="<?php echo esc_url( home_url( '/wp-includes/images/media/document.png' ) ); ?>" class="icon" draggable="false" alt="">
-						</div>
+						<?php if ( $image ) : ?>
+							<div class="image">
+								<img src="<?php echo esc_url( $image ); ?>" class="icon" draggable="false" alt="">
+							</div>
+						<?php endif; ?>
 
 						<div class="details">
 							<p class="title">
