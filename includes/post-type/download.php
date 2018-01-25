@@ -118,6 +118,7 @@ function add_attachment_metabox( $post ) {
 						<?php if ( $image ) : ?>
 							<div class="image">
 								<img src="<?php echo esc_url( $image ); ?>" class="icon" draggable="false" alt="">
+								<button class="close"><?php esc_html_e( 'Remove file', 'mah_downloads' ); ?></button>
 							</div>
 						<?php endif; ?>
 
